@@ -1,4 +1,3 @@
-
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const pokemonName = document.getElementById('pokemon-name');
@@ -17,11 +16,10 @@ const speed = document.getElementById('speed');
 const fetchData = async () => {
     try {
         const pokemonNameOrID = searchInput.value.toLowerCase();
-
         const response = await fetch(`https://pokeapi-proxy.freecodecamp.rocks/api/pokemon/${pokemonNameOrID}`);
 
         if (!response.ok) {
-            throw new Error('Could not fetch Resource');
+            throw new Error('Could not fetch resource');
         }
 
         const data = await response.json();
@@ -29,38 +27,39 @@ const fetchData = async () => {
         getPokemon(data);
     } catch (err) {
         resetDisplay();
-        alert('Pokemon not found');
-        console.log(`Pokemon not found: ${err}`);
+        alert('Pokémon not found');
+        console.log(`Pokémon not found: ${err}`);
     }
 };
+
 searchButton.addEventListener('click', (e) => {
     e.preventDefault();
+    resetDisplay(); // Reset display first to avoid flickering
     fetchData();
-    resetDisplay();
-})
+});
 
-const getPokemon = ({name, id, sprites, stats,height, weight, types}) => {
-    pokemonName.textContent = name;
+const getPokemon = ({ name, id, sprites, stats, height, weight, types }) => {
+    pokemonName.textContent = name.toUpperCase(); // Ensure uppercase
     pokemonId.textContent = `#${id}`;
     pokemonWeight.textContent = `Weight: ${weight}`;
     pokemonHeight.textContent = `Height: ${height}`;
 
-    spriteContainer.innerHTML = `
-    <img id="sprite" src="${sprites.front_default}" alt="${name} front default sprite">
-  `;
+    // Add sprite
+    spriteContainer.innerHTML = `<img id="sprite" src="${sprites.front_default}" alt="${name} front default sprite">`;
 
-    pokemonTypes.innerHTML = types.map((obj) => {
-        return `<span class="type ${obj.type.name}">${obj.type.name.toUpperCase()}</span>`
-    }).join('');
+    // Clear previous types and add new ones
+    pokemonTypes.innerHTML = types
+        .map((obj) => `<span class="type ${obj.type.name}">${obj.type.name.toUpperCase()}</span>`)
+        .join('');
 
+    // Assign stats
     hp.textContent = stats[0].base_stat;
     attack.textContent = stats[1].base_stat;
     defense.textContent = stats[2].base_stat;
     specialAttack.textContent = stats[3].base_stat;
     specialDefense.textContent = stats[4].base_stat;
     speed.textContent = stats[5].base_stat;
-
-}
+};
 
 const resetDisplay = () => {
     pokemonName.textContent = '';
@@ -75,4 +74,4 @@ const resetDisplay = () => {
     specialAttack.textContent = '';
     specialDefense.textContent = '';
     speed.textContent = '';
-}
+};
