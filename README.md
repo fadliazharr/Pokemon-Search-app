@@ -2,8 +2,7 @@
 
 ### Link
 Click the link below to try the app yourself:
-https://fadliazharr.github.io/Pokemon-Search-app/?pokemon=pikachu
-
+(https://fadliazharr.github.io/Pokemon-Search-app/)
 ## Overview
 The **Pokemon Search App** is a simple web-based application that allows users to search for Pokémon by name or ID. It fetches data from the [freeCodeCamp PokeAPI proxy](https://pokeapi-proxy.freecodecamp.rocks/api/pokemon/) and displays essential Pokémon information, including:
 
